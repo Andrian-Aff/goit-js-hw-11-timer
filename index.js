@@ -10,7 +10,8 @@ class CountdownTimer {
     constructor({onTick, selector, targetDate}) {
         this.targetDate = targetDate;
         this.intervalId = targetDate;
-        this.onTick = onTick;
+        this.onTick = updateClockface;
+        this.updateClockface = updateClockface;
         this.selector = selector;
     };
 
@@ -20,10 +21,14 @@ class CountdownTimer {
 
         this.intervalId = setInterval(() => { 
             const currentTime = Date.now();
+            if(startTime < currentTime) {
+                alert('Недопустимое значение: дата уже наступила');
+            }
             const deltaTime =startTime - currentTime;
             const time = this.getTimeComponents(deltaTime);
             this.onTick(time);
         }, 1000);
+        
     }
 
     getTimeComponents(time) {
@@ -37,7 +42,7 @@ class CountdownTimer {
     pad(value) {
         return String(value).padStart(2, '0')
        };
-       
+   
 }
 
 function updateClockface ({days, hours, mins, secs}) {
@@ -46,11 +51,13 @@ function updateClockface ({days, hours, mins, secs}) {
     refs.minsEl.textContent =`${mins}`;
     refs.secsEl.textContent = `${secs}`;
     return {days, hours, mins, secs}
-   }
+   }    
+
+
 
 const timer1 = new CountdownTimer({
     selector: '#timer-1',
-    targetDate: new Date('Sep 01, 2021'),
+    targetDate: new Date('Aug 01, 2021'),
     onTick: updateClockface,
 });
 
