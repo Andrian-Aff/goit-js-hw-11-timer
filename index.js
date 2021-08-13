@@ -10,8 +10,7 @@ class CountdownTimer {
     constructor({onTick, selector, targetDate}) {
         this.targetDate = targetDate;
         this.intervalId = targetDate;
-        this.onTick = updateClockface;
-        this.updateClockface = updateClockface;
+        this.onTick = onTick;
         this.selector = selector;
     };
 
@@ -57,7 +56,7 @@ function updateClockface ({days, hours, mins, secs}) {
 
 const timer1 = new CountdownTimer({
     selector: '#timer-1',
-    targetDate: new Date('Aug 01, 2021'),
+    targetDate: new Date('Aug 22, 2021'),
     onTick: updateClockface,
 });
 
